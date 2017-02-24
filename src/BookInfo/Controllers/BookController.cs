@@ -21,7 +21,7 @@ namespace BookInfo.Controllers
         public ViewResult Index()
         {
             ViewBag.Genre = "All";
-            return View(bookRepo.GetAllBooks().ToList());
+            return View(bookRepo.GetAllBooks().ToList<Book>());
         }
 
         public ViewResult BooksByGenre(string genre)

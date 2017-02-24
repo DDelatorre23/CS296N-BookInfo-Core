@@ -23,14 +23,25 @@ namespace BookInfo.Controllers
             ViewBag.BookTitle = title;
             ViewBag.Id = id;
             // TODO Create a view model
-
-            return View(new Review());
+            Review review = new Review();
+            review.Body = "Text of the review";
+            review.Rating = 5;
+            return View();
         }
 
-        [HttpPost]
-        public ViewResult ReviewForm(int rating, string body)
+
+        public IActionResult ReviewFormSubmit(int bookId, int Rating, string Body)
         {
-            return null;
+            // Get the full model for the book being reviewed
+            Book book = (from b in bookRepo.GetAllBooks()
+                       where b.BookId == bookId
+                       select b).FirstOrDefault<Book>();
+
+            // Add the review information
+            book.BookReviews.Add(new Review { Rating = Rating, Body = Body });
+            bookRepo.Update(book);
+
+            return RedirectToAction("Index", "Book");
         }
 
     }

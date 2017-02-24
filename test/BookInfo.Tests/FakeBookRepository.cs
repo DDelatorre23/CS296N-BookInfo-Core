@@ -26,9 +26,9 @@ namespace BookInfo.Tests
             books.Add(book);
         }
 
-        public IEnumerable<Book> GetAllBooks()
+        public IQueryable<Book> GetAllBooks()
         {
-            return books;
+            return books.AsQueryable();
         }
 
         public Book GetBookByTitle(string title)
