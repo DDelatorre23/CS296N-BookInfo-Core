@@ -4,7 +4,7 @@
 }
 <h1> Book Review for <i>@ViewBag.BookTitle</i></h1>
 
-<form action="/Review/ReviewFormSubmit" method="post">
+<form action="/Review/ReviewForm" method="post">
     <input type="hidden" name="bookId" value=@ViewBag.Id />
     <input name="Body" /> <br />
     <input name="Rating" />
