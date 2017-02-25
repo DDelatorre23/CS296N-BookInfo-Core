@@ -23,6 +23,7 @@ namespace BookInfo.Repositories
         public Book GetBookByTitle(string title)
         {
             return context.Books.First(b => b.Title == title);
+        
         }
 
         public List<Book> GetBooksByAuthor(Author author)

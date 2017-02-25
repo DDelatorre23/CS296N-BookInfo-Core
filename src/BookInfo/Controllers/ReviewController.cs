@@ -20,30 +20,23 @@ namespace BookInfo.Controllers
         [HttpGet]
         public ViewResult ReviewForm(string title, int id)
         {
-            ViewBag.BookTitle = title;
-            ViewBag.Id = id;
-            // TODO Create a view model
-            /*
-            Review review = new Review();
-            review.Body = "Text of the review";
-            review.Rating = 5;
-            return View(review);
-            */
-            return View();
+            var reviewVm = new ReviewViewModel();
+            reviewVm.BookReview = new Review { Body = "Write review here", Rating = 3 };
+            reviewVm.BookId = id;
+            reviewVm.Title = title;
+           
+            return View(reviewVm);
         }
 
         [HttpPost]
-        public IActionResult ReviewForm(int bookId, int Rating, string Body)
+        public IActionResult ReviewForm(ReviewViewModel reviewVm)
         {
             // Get the full model for the book being reviewed
             Book book = (from b in bookRepo.GetAllBooks()
-                       where b.BookId == bookId
-                       select b).FirstOrDefault<Book>();
-
-            // Add the review information
-            book.BookReviews.Add(new Review { Rating = Rating, Body = Body });
+                         where b.BookId == reviewVm.BookId
+                         select b).FirstOrDefault<Book>();
+            book.BookReviews.Add(reviewVm.BookReview);
             bookRepo.Update(book);
-
             return RedirectToAction("Index", "Book");
         }
 
